@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   login: {
@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (value) => /[a-z]{3,16}/.test(value),
-      message: (props) => `${props.value} is not valid login`,
+      message: (props) => `${props.value} is not a valid login!`,
     },
   },
   email: {
@@ -14,16 +14,21 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     validate: {
-      validator: (value) => /[a-z]{3,16}@gmail\.com/.test(value),
-      message: (props) => `${props.value} is not valid email`,
+      validator: (value) => /[a-z]{3,16}@gmail\.com$/.test(value),
+      message: (props) => `${props.value} is not a valid email!`,
     },
   },
-  messages: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
-
+  messages: [
+    {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'Message',
+    },
+  ],
 },{
-    timestamps: true,
-    versionKey: false
+  timestamps: true,
+  versionKey: false
 });
-const User = mongoose.model("User", userSchema);
+
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

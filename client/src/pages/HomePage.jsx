@@ -1,22 +1,24 @@
-import { useSelector } from "react-redux";
-import RegisterForm from "../components/RegisterForm";
+import { useSelector } from 'react-redux';
+import RegisterForm from '../components/RegisterForm';
+import MessageForm from '../components/MessageForm';
+import MessageList from '../components/MessageList';
 
 const HomePage = () => {
   const { user, error, isPending } = useSelector((store) => store.user);
-  if(isPending){
-    return <p>Loading...</p>
+  if (isPending) {
+    return <p>Loading...</p>;
   }
-  if(error){
-    return <p>Error!!! {error}</p>
+  if (error) {
+    return <p>Error!!! {error}</p>;
   }
-  if(user){
+  if (user) {
     return (
-        <div>
-            hi, {user.login}
-        {/* <h1>Home page</h1>
-        <RegisterForm /> */}
+      <div>
+        Hi, {user.login}
+        <MessageList />
+        <MessageForm />
       </div>
-    )
+    );
   }
   return (
     <div>

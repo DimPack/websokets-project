@@ -1,13 +1,11 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createUser } from "../api";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createUser } from '../api';
 
 export const authUser = createAsyncThunk(
-  "user/authUser",
+  'user/authUser',
   async (params, thunkAPI) => {
     try {
-      const {
-        data: { data },
-      } = await createUser(params);
+      const { data: {data} } = await createUser(params);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -15,28 +13,26 @@ export const authUser = createAsyncThunk(
   }
 );
 
-const usersSlice = createSlice({
-  name: "user",
+const userSlice = createSlice({
+  name: 'user',
   initialState: {
     user: null,
     error: null,
     isPending: false,
   },
   reducers: {},
-  extraReducers: (builder) => {
-    // запит до сервера
-    //eslint-disable-next-line
-    builder.addCase(authUser.pending, (state, action) => {
+  extraReducers: (builder) => { //eslint-disable-next-line
+    builder.addCase(authUser.pending, (state, action)=>{
       state.isPending = true;
       state.user = null;
       state.error = null;
     });
-    builder.addCase(authUser.fulfilled, (state, action) => {
+    builder.addCase(authUser.fulfilled, (state, action)=>{
       state.isPending = false;
       state.user = action.payload;
       state.error = null;
     });
-    builder.addCase(authUser.rejected, (state, action) => {
+    builder.addCase(authUser.rejected, (state, action)=>{
       state.isPending = false;
       state.user = null;
       state.error = action.payload;
@@ -44,4 +40,4 @@ const usersSlice = createSlice({
   },
 });
 
-export default usersSlice.reducer;
+export default userSlice.reducer;

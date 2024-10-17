@@ -1,24 +1,24 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true,
     validate: {
-      validator: (value) => /[A-Za-z0-9\s\\.!?-]{3-255}/.test(value),
-      message: (props) => `${props.value} is not valid message`,
+      validator: (value) => /^[A-Za-z0-9\s\\.!?-]{3,}$/.test(value),
+      message: (props) => `${props.value} is not a valid content!`,
     },
   },
-
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'User',
     required: true,
   },
 },{
-    timestamps: true,
-    versionKey: false
+  timestamps: true,
+  versionKey: false
 });
-const Message = mongoose.model("Message", messageSchema);
+
+const Message = mongoose.model('Message', messageSchema);
 
 module.exports = Message;
